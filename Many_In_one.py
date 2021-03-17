@@ -21,19 +21,20 @@ pd.set_option('display.width', None)
 
 pd.options.display.max_rows
 yf.pdr_override()
+Signal_Indicators = pd.DataFrame()
 
-stock = 'itc' #input("Enter a stock ticker symbol: ")+'.NS'
-stock = stock+".NS"
-print(stock)
+## getting stock data
 
-startyear = 2019
-startmonth = 1
-startday = 1
-
-start = dt.datetime(startyear, startmonth, startday)
-now = dt.datetime.now()
-
-df = pdr.get_data_yahoo(stock, start, now)
+# stock = 'itc' #input("Enter a stock ticker symbol: ")+'.NS'
+# stock = stock+".NS"
+# print(stock)
+#
+# now = dt.datetime.now()
+#
+# d = dt.timedelta(days = 300) #212.452970     -2.221000       -1.516290     -0.704710
+# start = now - d
+#
+# df = pdr.get_data_yahoo(stock, start, now)
 
 """
 Usage : 
@@ -276,7 +277,7 @@ def SuperTrend(df, period, multiplier, ohlc=['Open', 'High', 'Low', 'Close']):
                                              df['final_lb'].iat[i] else 0.00
 
         # Mark the trend direction up/down
-    df[stx] = np.where((df[st] > 0.00), np.where((df[ohlc[3]] < df[st]), 'down', 'up'), np.NaN)
+    df[stx] = np.where((df[st] > 0.00), np.where((df[ohlc[3]] < df[st]), 'sell', 'buy'), np.NaN)
 
     # Remove basic and final bands from the columns
     df.drop(['basic_ub', 'basic_lb', 'final_ub', 'final_lb'], inplace=True, axis=1)
@@ -306,6 +307,7 @@ def MACD(df, fastEMA=12, slowEMA=26, signal=9, base='Close'):
             MACD Histogram (MACD (hist_$fastEMA_$slowEMA_$signal))
     """
 
+
     fE = "ema_" + str(fastEMA)
     sE = "ema_" + str(slowEMA)
     macd = "macd_" + str(fastEMA) + "_" + str(slowEMA) + "_" + str(signal)
@@ -325,8 +327,46 @@ def MACD(df, fastEMA=12, slowEMA=26, signal=9, base='Close'):
     # Compute MACD Histogram
     df[hist] = np.where(np.logical_and(np.logical_not(df[macd] == 0), np.logical_not(df[sig] == 0)), df[macd] - df[sig],
                         0)
+    #Following is the signal mechanism
+    signal = []
+    # for i in range(len(df)):
+    #     if df['macd_12_26_9'][i] > df['signal_12_26_9'][i]:
+    #         signal.append('buy')
+    #
+    #
+    #     elif df['macd_12_26_9'][i] < df['signal_12_26_9'][i]:
+    #         signal.append('sell')
+    #
+    #
+    #     else:
+    #         signal.append('hold')
+    # Signal_Indicators['signalMACD'] = signal
+    # df.append(Signal_Indicators)
 
-    return df
+
+    # to append hold instead of repetative sell/ buy signal... 1 for buy, 2 for sell
+    c = 0
+    for i in range(len(df)):
+        if df['macd_12_26_9'][i] > df['signal_12_26_9'][i]:
+            if c == 1:
+                signal.append('hold')
+            else:
+                signal.append('buy')
+                c = 1
+
+        elif df['macd_12_26_9'][i] < df['signal_12_26_9'][i]:
+            if c == 2:
+                signal.append('hold')
+            else:
+                signal.append('sell')
+                c = 2
+
+        else:
+            signal.append('hold')
+
+    Signal_Indicators = pd.DataFrame(index=df.index)
+    Signal_Indicators['signalMACD'] = signal
+    return Signal_Indicators
 
 
 def BBand(df, base='Close', period=20, multiplier=2):
@@ -385,6 +425,21 @@ def RSI(df, base="Close", period=21):
     df['RSI_' + str(period)] = 100 - 100 / (1 + rUp / rDown)
     df['RSI_' + str(period)].fillna(0, inplace=True)
 
+    #signal column is generated below
+    signal=[]
+    for i in range(len(df)):
+        if df['RSI_'+str(period)][i] > 70:
+            signal.append('sell')
+
+        elif df['RSI_'+str(period)][i] < 30:
+            signal.append('buy')
+
+        else:
+            signal.append('hold')
+
+    Signal_Indicators = pd.DataFrame(index=df.index)
+    Signal_Indicators['SignalRSI']= signal
+    df.append(Signal_Indicators)
     return df
 
 
@@ -438,5 +493,5 @@ def Ichimoku(df, ohlc=['Open', 'High', 'Low', 'Close'], param=[9, 26, 52, 26]):
     df[chikou_span_column] = close.shift(-1 * chikou_span_period)
 
     return df
-print(MACD(df))
+
 

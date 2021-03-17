@@ -16,7 +16,7 @@ ticker = 'icicibank' #input("Enter a stock ticker symbol: ")+'.NS'
 ticker = ticker+".NS"
 print(ticker)
 
-startyear = 2019
+startyear = 2020
 startmonth = 1
 startday = 1
 
@@ -34,6 +34,19 @@ def rsi(df, period):
     df['average_loss'] = df['loss'].ewm(com=period - 1, min_periods=period).mean()
     df['rs'] = df['average_gain'] / df['average_loss']
     df['rsi'] = 100 - (100 / (1 + df['rs']))
+    Signal = []
+
+    for i in df['rsi']:
+        if i>70.0:
+            Signal.append("buy")
+
+        elif i<30.0:
+            Signal.append("sell")
+
+        else:
+            Signal.append("hold")
+
+    df['Signal']= Signal
     return df
 
 print( rsi(df, 14) )

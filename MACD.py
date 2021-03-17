@@ -12,40 +12,40 @@ pd.options.display.max_rows
 
 yf.pdr_override()
 
-ticker = 'icicibank' #input("Enter a stock ticker symbol: ")+'.NS'
-ticker = ticker+".NS"
-print(ticker)
+# ticker = 'icicibank' #input("Enter a stock ticker symbol: ")+'.NS'
+# ticker = ticker+".NS"
+# print(ticker)
+#
+# startyear = 2019
+# startmonth = 1
+# startday = 1
+#
+# start = dt.datetime(startyear, startmonth, startday)
+# now = dt.datetime.now()
+# df = pdr.get_data_yahoo(ticker, start, now)
+#
+# #df['backward_ewm'] = df['Close'].ewm(span=20,min_periods=0,adjust=False,ignore_na=False).mean()
+# df = df.sort_index()
+def calc(df):
+    df['ewm26'] = df['Close'].ewm(span=26, min_periods=0, adjust=False, ignore_na=False).mean()
+    df['ewm12'] = df['Close'].ewm(span=12, min_periods=0, adjust=False, ignore_na=False).mean()
 
-startyear = 2019
-startmonth = 1
-startday = 1
-
-start = dt.datetime(startyear, startmonth, startday)
-now = dt.datetime.now()
-df = pdr.get_data_yahoo(ticker, start, now)
-
-#df['backward_ewm'] = df['Close'].ewm(span=20,min_periods=0,adjust=False,ignore_na=False).mean()
-df = df.sort_index()
-df['ewm26'] = df['Close'].ewm(span=26,min_periods=0,adjust=False,ignore_na=False).mean()
-df['ewm12'] = df['Close'].ewm(span=12,min_periods=0,adjust=False,ignore_na=False).mean()
-
-df['macd']=df['ewm12']-df['ewm26']
-df['ewm9/Signal_Line'] = df['macd'].ewm(span=9,min_periods=0,adjust=False,ignore_na=False).mean()
-c = 0
-signal = []
-for i in range(len(df)):
-    if df['macd'][i]>df['ewm9/Signal_Line'][i] :
-        signal.append('buy')
-
-
-    elif df['macd'][i]<df['ewm9/Signal_Line'][i] :
-        signal.append('sell')
+    df['macd'] = df['ewm12'] - df['ewm26']
+    df['ewm9/Signal_Line'] = df['macd'].ewm(span=9, min_periods=0, adjust=False, ignore_na=False).mean()
+    signal = []
+    for i in range(len(df)):
+        if df['macd'][i] > df['ewm9/Signal_Line'][i]:
+            signal.append('buy')
 
 
-    else:
-        signal.append('hold')
-df['signal'] = signal
-print(df)
+        elif df['macd'][i] < df['ewm9/Signal_Line'][i]:
+            signal.append('sell')
+
+
+        else:
+            signal.append('hold')
+    df['signalMACD'] = signal
+    return df
 # exp1 = df.ewm(span=12, adjust=False).mean()
 # exp2 = df.ewm(span=26, adjust=False).mean()  #15.223581    22.290528  -7.066948
 # macd = exp1 - exp2

@@ -29,7 +29,7 @@ week_days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday
 week_num=datetime.date(int(day),int(mon),int(yr)).weekday()
 weekday = week_days[week_num]
 
-client = FivePaisaClient(email="jakshat101@gmail.com", passwd="$Ecurity@158", dob="20020714")
+client = FivePaisaClient(email="@gmail.com", passwd="Password", dob="yyyymmdd")
 client.login()
 
 def sell(script_code,close_price,quantity,ticker,stoploss):

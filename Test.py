@@ -11,7 +11,7 @@ pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)
 
-ticker = 'IDFCFIRSTB'#(input("Enter a stock ticker symbol: ")).strip()
+ticker = 'ICICIBANK'#(input("Enter a stock ticker symbol: ")).strip()
 script_code = 539437#int(input("Enter the stock script code: "))#  scode[1].strip()
 ticker = ticker.upper()+".BO"
 print(ticker+'  '+str(script_code))

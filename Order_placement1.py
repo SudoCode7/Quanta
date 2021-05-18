@@ -97,7 +97,7 @@ def buy(script_code,close_price,quantity,ticker,stoploss):
 def order_stats(data):
     df = pd.DataFrame(data= data,index=[0])
     sc = df['Script_code'][0]
-    read = pd.read_excel('Order_book.xlsx', index_col=0)
+    read = pd.read_excel('Order_book.txt.xls', index_col=0)
     lis= []
     for i in read['Script_code']:
          lis.append(i)
@@ -169,19 +169,19 @@ def write_data(data, signal):
 
     # #print('hi')
     # if signal=='make':
-    #     read = pd.read_excel('Order_book.xlsx', index_col='Ticker')
+    #     read = pd.read_excel('Order_book.txt.xls', index_col='Ticker')
     #     #temp=pd.DataFrame.from_dict(data)
     #     #temp.set_index('Ticker')
     #     temp = [data["Script_code"],data['Signal'],data['Buy Price'],data['Quantity'],data["Date Bought"],data["Stoploss"]]
     #     df = pd.DataFrame(data=read)
     #     df.loc[data['Ticker'][0]] = temp[data["Script_code"],data['Signal'],data['Buy Price'],data['Quantity'],data["Date Bought"],data["Stoploss"]]
-    #     df.to_excel('Order_book.xlsx')
+    #     df.to_excel('Order_book.txt.xls')
     #     print('hi')
     #
     # elif signal=='clear':
-    #     read = pd.read_excel('Order_book.xlsx', index_col='Ticker')
+    #     read = pd.read_excel('Order_book.txt.xls', index_col='Ticker')
     #     read.drop(data['Ticker'], inplace=True)
     #     df = pd.DataFrame(data=read)
-    #     df.to_excel('Order_book.xlsx')
+    #     df.to_excel('Order_book.txt.xls')
 
 

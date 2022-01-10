@@ -17,7 +17,7 @@ ticker = ticker.upper()+".BO"
 print(ticker+'  '+str(script_code))
 ticker = yf.Ticker(ticker)
 
-client = FivePaisaClient(email="jakshat101@gmail.com", passwd="$Ecurity@158", dob="20020714")
+client = FivePaisaClient(email="")
 client.login()
 
 # get historical market data and intitialize same index to signal

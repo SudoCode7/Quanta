@@ -14,7 +14,7 @@ date = date.split(' ')[0]
 
 # login to network via api
 try:
-    client = FivePaisaClient(email="jakshat101@gmail.com", passwd="$Ecurity@158", dob="20020714")
+    client = FivePaisaClient(email="")
     client.login()
     log = True
 except:

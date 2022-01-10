@@ -14,7 +14,7 @@ hr = int(now[0])
 min=int(now[1])
 
 
-client = FivePaisaClient(email="jakshat101@gmail.com", passwd="$Ecurity@158", dob="20020714")
+client = FivePaisaClient()
 client.login()
 tic='IDFCFIRSTB'
 

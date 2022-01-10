@@ -2,12 +2,12 @@ from py5paisa import FivePaisaClient
 
 def login():
     try:
-        client = FivePaisaClient(email="jakshat101@gmail.com", passwd="$Ecurity@158", dob="20020714")
+        client = FivePaisaClient(email="", passwd="", dob="")
         client.login()
         log= True
 
     except TypeError:
-        client = FivePaisaClient(email="jakshat101@gmail.com", passwd="$Ecurity@158", dob="20020714")
+        client = FivePaisaClient(email="", passwd="", dob="")
         client.login()
         log = True
 

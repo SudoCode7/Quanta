@@ -8,12 +8,12 @@ amt = 600.0 #float(input("Enter a stock ticker symbol: "))
 tic = 'itc'#(input("Enter a stock ticker symbol: ")).strip()#YESBANK' #
 script_code = 500875#int(input("Enter the stock script code: "))#  scode[1].strip()532648 #
 quantity = 1 #int(input("Enter the no. of quantity to be bought: "))
-EMAIL_ADDRESS = 'jakshat70@gmail.com'#input("Enter your gmail address ")  # ENTER YOUR EMAIL ADDRESS
+EMAIL_ADDRESS = 'il.com'#input("Enter your gmail address ")  # ENTER YOUR EMAIL ADDRESS
 ticker = tic.upper()+".BO"
 ticker = yf.Ticker(ticker)
 df = ticker.history(period="5d")
-api_key = '0ed285bf226264e3b52d36a920c9c82d' #Enter your api key here
-api_secret = '49c5467504f4e8849d172aae971dfd6d' #Enter your api secret here
+api_key = '0ed285bf22d' #Enter your api key here
+api_secret = '49c54172aae971dfd6d' #Enter your api secret here
 mailjet = Client(auth=(api_key, api_secret), version='v3.1')
 i=0
 

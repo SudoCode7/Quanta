@@ -37,7 +37,7 @@ df = ticker.history(period="300d")
 df = df.sort_index()
 print(df)
 
-client = FivePaisaClient(email="jakshat101@gmail.com", passwd="$Ecurity@158", dob="20020714")
+client = FivePaisaClient(email="", passwd="", dob="")
 client.login()
 
 # # Fetches holdings

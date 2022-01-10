@@ -34,7 +34,7 @@ df = pdr.get_data_yahoo(ticker, start, now)
 #print(df)
 df = df.sort_index()
 
-client = FivePaisaClient(email="jakshat101@gmail.com", passwd="$Ecurity@158", dob="20020714")
+client = FivePaisaClient(email="")
 client.login()
 
 signal_EMA_200 = indi.EMA(df,'Close','ema_200',200)
